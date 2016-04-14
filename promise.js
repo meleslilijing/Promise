@@ -59,8 +59,8 @@
 		var self = this;
 
 		// to fix promise值穿透
-		onResolve = onResolve || function(value) {return value}
-		onRejected = onRejected || function(reason) {return reason}
+		onResolve = onResolve || function(value) { return value; }
+		onRejected = onRejected || function(reason) { return reason; }
 
 		return new Promise(function(resolve, reject) {
 
@@ -107,3 +107,55 @@
 	}
 
 })(this)
+
+
+// test
+function fetch() {
+	return new Promise(function(resolve, reject) {
+		setTimeout(function() {
+			var responseData = {
+				rtnCode: 200,
+				rtnMsg: 'OK'
+			}
+			resolve(responseData)
+		}, 1000)
+	})
+}
+
+function fetchData(url) {
+	console.log("fetchData")
+	fetch(url)
+		.then(function(val) {
+			console.log("responseData: ");
+			console.log(val)
+			return 'It\'s new then data'
+		})
+		.then(function(str) {
+			console.log(str)
+		})
+		.then(function() {
+			return new Promise(function(resolve, reject) {
+				console.log('wait 1000ms will throw Error')
+				
+					setTimeout(function() {
+						try {
+							console.log('throw error now:')
+							throw new Error('reject')
+							resolve('resolv')
+						} catch(e) {
+							console.log('In reject branch')
+							reject(e)
+						}
+					}, 1000)	
+			})
+		})
+		.then(function(val) {
+			console.log(val)
+		})
+		.catch(function(reason) {
+			console.log('console error reason: ', reason)
+		})
+}
+
+fetchData()
+

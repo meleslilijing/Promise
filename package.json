@@ -1,0 +1,19 @@
+{
+  "name": "promise",
+  "version": "1.0.0",
+  "description": "实现Promise",
+  "main": "promise.js",
+  "scripts": {
+    "test": "node promise.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meleslilijing/Promise.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/meleslilijing/Promise/issues"
+  },
+  "homepage": "https://github.com/meleslilijing/Promise#readme"
+}
